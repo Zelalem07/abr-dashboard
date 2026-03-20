@@ -25,7 +25,8 @@ st.sidebar.header("Filters")
 grade = st.sidebar.multiselect(
     "Select Grade",
     options=df["Grade"].unique(),
-    default=df["Grade"].unique()
+    default=df["Grade"].unique(),
+    help="select grade"
 )
 
 # Section filter

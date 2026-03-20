@@ -90,15 +90,39 @@ col3.metric("Staff Reporting", total_staff)
 # -----------------------------
 # Bar Chart: Infractions by Grade
 # -----------------------------
+#
+# -----------------------------
+df_daily = df_filtered.groupby(
+    ["Infraction_Date", "Grade"]
+)["Total_Infractions"].sum().reset_index()
 
-fig1 = px.scatter(\
-    df_filtered,
-    x="Grade",
+fig1 = px.line(
+    df_daily,
+    x="Infraction_Date",
     y="Total_Infractions",
-    title="Infractions by Grade",
-    color="Grade"
+    color="Grade",
+    title="Daily Infractions per Grade",
+    markers=True
 )
+
 st.plotly_chart(fig1, use_container_width=True)
+
+
+fig1.update_layout(
+    hovermode="x unified",
+    xaxis_title="Date",
+    yaxis_title="Number of Infractions"
+)
+# -----------------------------
+
+# fig1 = px.scatter(\
+#     df_filtered,
+#     x="Grade",
+#     y="Total_Infractions",
+#     title="Infractions by Grade",
+#     color="Grade"
+# )
+# st.plotly_chart(fig1, use_container_width=True)
 
 # -----------------------------
 # Treemap: Infractions Hierarchy

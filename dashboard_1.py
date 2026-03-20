@@ -5,7 +5,7 @@ import plotly.express as px
 # -----------------------------
 # Title
 # -----------------------------
-st.title("Student Behavior Dashboard")
+st.title("Abaarso School \n Student Behavior Dashboard")
 
 # -----------------------------
 # Load Data
@@ -76,6 +76,14 @@ else:
     ]
 
 # -----------------------------
+# fig = px.pie(df_filtered, names='Infraction', hole=0.4)
+#
+# st.plotly_chart(fig)
+#
+# fig.update_layout(
+#     annotations=[dict(text='Total<br>100', x=0.5, y=0.5, showarrow=False)]
+# )
+# -----------------------------
 # KPIs
 # -----------------------------
 total_infractions = df_filtered["Infraction"].count()
@@ -92,27 +100,59 @@ col3.metric("Staff Reporting", total_staff)
 # -----------------------------
 #
 # -----------------------------
-df_daily = df_filtered.groupby(
-    ["Infraction_Date", "Grade"]
-)["Total_Infractions"].sum().reset_index()
+# df_daily = df_filtered.groupby(
+#     ["Infraction_Date", "Grade"]
+# )["Total_Infractions"].sum().reset_index()
+#
+# fig1 = px.line(
+#     df_daily,
+#     x="Infraction_Date",
+#     y="Total_Infractions",
+#     color="Grade",
+#     title="Daily Infractions per Grade",
+#     markers=True
+# )
+#
+# st.plotly_chart(fig1, use_container_width=True)
+#
+#
+# fig1.update_layout(
+#     hovermode="x unified",
+#     xaxis_title="Date",
+#     yaxis_title="Number of Infractions"
+# )
+# -----------------------------
+col_a, col_b = st.columns(2)
+with col_b:
+    df_daily = df_filtered.groupby(
+        ["Infraction_Date", "Grade"]
+    )["Total_Infractions"].sum().reset_index()
 
-fig1 = px.line(
-    df_daily,
-    x="Infraction_Date",
-    y="Total_Infractions",
-    color="Grade",
-    title="Daily Infractions per Grade",
-    markers=True
-)
+    fig1 = px.line(
+        df_daily,
+        x="Infraction_Date",
+        y="Total_Infractions",
+        color="Grade",
+        title="Daily Infractions per Grade",
+        markers=True
+    )
 
-st.plotly_chart(fig1, use_container_width=True)
+    st.plotly_chart(fig1, use_container_width=True)
 
+    fig1.update_layout(
+        hovermode="x unified",
+        xaxis_title="Date",
+        yaxis_title="Number of Infractions"
+    )
 
-fig1.update_layout(
-    hovermode="x unified",
-    xaxis_title="Date",
-    yaxis_title="Number of Infractions"
-)
+with col_a:
+    fig = px.pie(df_filtered, names='Infraction', hole=0.4)
+
+    st.plotly_chart(fig)
+
+    fig.update_layout(
+        annotations=[dict(text='Total<br>100', x=0.5, y=0.5, showarrow=False)]
+    )
 # -----------------------------
 
 # fig1 = px.scatter(\
